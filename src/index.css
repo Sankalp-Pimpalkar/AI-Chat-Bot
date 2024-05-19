@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.h1-style {
+    @apply text-3xl font-bold text-gray-700
+}
+
+.h2-style {
+    @apply text-2xl font-bold text-gray-700
+}
+
+.h3-style {
+    @apply text-xl font-bold text-gray-700
+}
+
+.paragraph-style {
+    @apply text-sm text-gray-500 font-medium
+}
+
+.link {
+    @apply text-sm font-medium text-sky-600 px-2
+}

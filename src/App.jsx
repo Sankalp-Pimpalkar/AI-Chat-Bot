@@ -8,7 +8,6 @@ import {
   Signup,
   WelcomePage
 } from "./pages"
-import { ChatSession } from "./components"
 
 function App() {
 
@@ -22,7 +21,7 @@ function App() {
       </Route>
 
       <Route path="/" element={<Protected><Home /></Protected>}>
-        <Route path="/:sessionId" element={<ChatSession />} />
+        {/* <Route path="/:sessionId" element={<ChatSession />} /> */}
       </Route>
 
       <Route path="*" element={<NotFound />} />

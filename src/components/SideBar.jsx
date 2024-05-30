@@ -1,62 +1,36 @@
-import { useState } from 'react';
-import Hide from './icons/Hide';
-import Show from './icons/Show';
-import Write from './icons/Write';
-import Google from './icons/Google';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux"
 
-const Sidebar = () => {
-    const [isVisible, setIsVisible] = useState(true);
-    const navigate = useNavigate()
+function SideBar() {
+    let sessions = useSelector(state => state.chatSessionsReducer)
 
-    const toggleSidebar = () => {
-        setIsVisible(!isVisible);
-    };
-
-    const GenerateNewSession = () => {
-        navigate(`/${Date.now()}`)
-    }
+    sessions = Object.keys(sessions).map(chatSession => (
+        sessions[chatSession][0]
+    ))
+    console.log(sessions)
 
     return (
-        <div className={`flex items-start ${isVisible && 'border-r'} border-gray-600`}>
-            <div className={`w-full flex flex-col gap-3 min-w-[20rem] sm:max-w-xs h-screen p-3 overflow-y-auto bg-gray-300 transition-transform duration-300 ease-in-out ${isVisible ? 'translate-x-0 block' : '-translate-x-full hidden'}`}>
-                <div className='bg-gray-100 py-2 px-3 rounded-md flex items-center justify-between'>
-                    <button onClick={toggleSidebar}>
-                        <Hide className='text-3xl text-gray-600' />
-                    </button>
+        <div className="bg-gray-900 absolute top-14 left-0 border border-gray-800 p-3 rounded-md w-full max-w-sm">
+            <p className="text-base text-gray-400 font-medium ">
+                Recent Chats
+            </p>
 
-                    <button>
-                        <Write className='text-3xl text-gray-600' />
-                    </button>
-                </div>
+            <div className="flex flex-col gap-2 mt-3">
+                {
+                    sessions.map((session, index) => (
+                        <a href={`/${session.sessionId}`}
+                            key={index}
+                            className="bg-gray-800 cursor-pointer transition-all duration-200 hover:bg-gray-700 p-3 rounded-md border border-gray-700">
 
-                <div onClick={GenerateNewSession} className='bg-gray-100 py-2 px-3 rounded-md flex gap-6 items-center cursor-pointer'>
-                    <Google className='text-2xl text-gray-600' />
-                    <p className='text-md text-gray-500 font-medium'>Create a new Chat</p>
-                </div>
+                            <p className="text-base text-gray-400">
+                                {session.message}
+                            </p>
 
-                <div>
-                    <p className='text-md text-gray-500 font-medium'>
-                        Chats will go here
-                    </p>
-                </div>
+                        </a>
+                    ))
+                }
             </div>
-
-            {
-                !isVisible && (
-                    <div className='p-5 rounded-md flex justify-center gap-6'>
-                        <button onClick={toggleSidebar}>
-                            <Show className='text-3xl text-gray-600' />
-                        </button>
-
-                        <button>
-                            <Write className='text-3xl text-gray-600' />
-                        </button>
-                    </div>
-                )
-            }
         </div>
-    );
-};
+    )
+}
 
-export default Sidebar;
+export default SideBar

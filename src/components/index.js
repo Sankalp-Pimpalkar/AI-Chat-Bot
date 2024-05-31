@@ -7,6 +7,7 @@ import Hide from "./icons/Hide";
 import Write from "./icons/Write";
 import Google from "./icons/Google";
 import Send from "./icons/Send";
+import BottomBar from "./BottomBar";
 
 export {
     InputField,
@@ -18,4 +19,5 @@ export {
     Write,
     Google,
     Send,
+    BottomBar
 }

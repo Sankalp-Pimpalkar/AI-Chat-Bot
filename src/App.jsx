@@ -8,6 +8,7 @@ import {
   Signup,
   WelcomePage
 } from "./pages"
+import ChatSession from "./components/ChatSession"
 
 function App() {
 
@@ -20,8 +21,15 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Route>
 
-      <Route path="/" element={<Protected><Home /></Protected>}>
-        {/* <Route path="/:sessionId" element={<ChatSession />} /> */}
+      <Route
+        path="/"
+        element={
+          <Protected>
+            <Home />
+          </Protected>
+        }
+      >
+        <Route path="/chats/:sessionId" element={<ChatSession />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

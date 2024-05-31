@@ -6,6 +6,7 @@ import { getAllMessagesInState } from "../redux/reducers/chatSessionsReducer"
 import { currentUser } from "../redux/reducers/authReducer"
 import authService from "../services/appwrite/auth"
 import databaseService from "../services/appwrite/database"
+import BottomBar from "../components/BottomBar"
 
 function Home() {
     const dispatch = useDispatch()
@@ -28,9 +29,11 @@ function Home() {
         <div className="w-full h-screen bg-gray-950">
             <Navbar />
 
-            <div className="container mx-auto text-gray-200">
+            <div className="container mx-auto py-5 px-3 text-gray-200">
                 <Outlet />
             </div>
+
+            <BottomBar />
         </div>
     )
 }

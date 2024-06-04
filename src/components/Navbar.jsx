@@ -11,7 +11,7 @@ function Navbar() {
     const [toggleSidebar, setToggleSidebar] = useState(false)
 
     return (
-        <div className="border-b border-gray-800 p-3">
+        <div className="border-b z-auto bg-slate-950 border-gray-800 p-3 sticky top-0">
             <div className="relative flex items-center justify-between w-full container mx-auto px-2">
 
                 <div className="text-gray-600 flex items-center gap-6 px-0">
@@ -21,9 +21,7 @@ function Navbar() {
                                 (<Show className="text-2xl md:text-3xl cursor-pointer" />) :
                                 (<Hide className="text-2xl md:text-3xl cursor-pointer" />)
                         }
-                        {
-                            toggleSidebar && <SideBar />
-                        }
+                        <SideBar isVisible={toggleSidebar} />
                     </div>
                     <Write className="text-2xl md:text-3xl cursor-pointer" />
                 </div>

@@ -50,7 +50,6 @@ class DatabaseService {
                     Query.orderAsc('$createdAt')
                 ]
             )
-            console.log(messages)
 
             if (messages) {
                 return messages.documents

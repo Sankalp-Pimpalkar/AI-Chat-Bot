@@ -7,7 +7,6 @@ import Copy from "./icons/Copy"
 function Message({ sender, message }) {
 
     const messageRef = useRef()
-    const promptRef = useRef(null)
     const [isCopied, setIsCopied] = useState(false)
 
     function handleCopy() {
@@ -18,28 +17,24 @@ function Message({ sender, message }) {
     }
 
     useEffect(() => {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             setIsCopied(false)
         }, 5000)
 
-        // return clearTimeout(timeout)
+        return () => clearTimeout(timeout)
     }, [handleCopy])
 
 
-    useEffect(() => {
-        promptRef.current?.scrollTo({ top: promptRef.current.scrollHeight, behavior: 'smooth' })
-    }, [message])
-
     return (
-        <div ref={promptRef} className="flex items-start gap-3 antialiased w-full max-w-3xl">
+        <div className="flex items-start gap-3 antialiased w-full max-w-3xl">
             <div className="bg-gray-300 px-1 flex items-center justify-center rounded-full">
                 {
                     sender === 'model' ?
                         (
-                            <Google className="text-slate-950 text-2xl" />
+                            <Google className="text-slate-950 text-xl" />
                         ) :
                         (
-                            <User className="text-slate-950 text-2xl" />
+                            <User className="text-slate-950 text-xl" />
                         )
                 }
 
@@ -47,7 +42,9 @@ function Message({ sender, message }) {
 
             <div className="flex items-start flex-col gap-1">
                 <h1 className="text-lg font-Roboto font-bold text-gray-300">
-                    {sender.charAt(0).toUpperCase() + sender.slice(1)}
+                    {
+                        sender === 'model' ? 'Gemini' : 'You'
+                    }
                 </h1>
 
                 <p ref={messageRef} className="text-gray-400 bg-gray-900 py-2 px-4 rounded-lg" dangerouslySetInnerHTML={{ __html: message }}>

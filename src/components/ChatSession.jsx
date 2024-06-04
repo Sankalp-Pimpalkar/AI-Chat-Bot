@@ -12,7 +12,8 @@ function ChatSession() {
     // Todo : Scroll to bottom is not working properly
 
     const [chats, setChats] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loadingChats, setLoadingChats] = useState(true)
+    const [loadingPromptResponse, setloadingPromptResponse] = useState(false)
     const [message, setMessage] = useState({
         userId: '',
         sessionId: '',
@@ -25,49 +26,59 @@ function ChatSession() {
     useEffect(() => {
         if (userId) {
             (async () => {
-                const messages = await databaseService.getMessagesBySessionId({
-                    userId,
-                    sessionId
-                })
+                if (!chats.length) {
+                    const messages = await databaseService.getMessagesBySessionId({
+                        userId,
+                        sessionId
+                    })
 
-                if (messages) {
-                    setChats(messages)
-                    setMessage({ ...message, userId, sessionId })
+                    if (messages) {
+                        setChats(messages)
+                        setMessage({ ...message, userId, sessionId })
+                    }
+                    setLoadingChats(false)
                 }
-                setLoading(false)
+
             })();
         }
     }, [userId, sessionId])
 
+    async function handleSubmit(e) {
+        e.stopPropagation()
+        if (message.message.trim()) {
 
-    async function handleSubmit() {
-        setChats(chats => [...chats, message])
-        await databaseService.addNewMessage(message)
+            setloadingPromptResponse(true)
+            setChats(chats => [...chats, message])
+            const inputMessage = message.message
+            // Clearing text input from input field
+            setMessage({ ...message, message: '' })
 
-        const responseFromGemini = await GenerateTextGemini({
-            chatHistory: chats,
-            prompt: message.message
-        })
+            await databaseService.addNewMessage(message)
 
-        const messageResponseFromGemini = {
-            userId,
-            sessionId,
-            message: String(responseFromGemini),
-            sender: 'model'
+            const responseFromGemini = await GenerateTextGemini({
+                chatHistory: chats,
+                prompt: inputMessage
+            })
+
+            const messageResponseFromGemini = {
+                userId,
+                sessionId,
+                message: String(responseFromGemini),
+                sender: 'model'
+            }
+
+            setChats(chats => [...chats, messageResponseFromGemini])
+            setloadingPromptResponse(false)
+
+            await databaseService.addNewMessage(messageResponseFromGemini)
         }
-
-        setChats(chats => [...chats, messageResponseFromGemini])
-        await databaseService.addNewMessage(messageResponseFromGemini)
-
-        // Clearing text input from input field
-        setMessage({ ...message, message: '' })
     }
 
     function handleChange(inputValue) {
         setMessage({ ...message, message: inputValue })
     }
 
-    if (loading) {
+    if (loadingChats) {
         return (
             <div className="flex justify-center">
                 <Loader className="text-4xl text-blue-500" />
@@ -75,11 +86,11 @@ function ChatSession() {
         )
     } else {
         return (
-            <div className="w-full md:max-w-6xl h-full pb-20 flex flex-col gap-8 mx-auto">
-                <div>
+            <div className="w-full md:max-w-6xl h-full pb-20 px-2 flex flex-col gap-8 mx-auto">
+                <div className="w-full h-fit flex flex-col gap-3">
                     {
                         chats.map((chat, index) => (
-                            <Message key={index} sender={chat.sender} message={chat.message} />
+                            <Message key={index} chats={chats} sender={chat.sender} message={chat.message} />
                         ))
                     }
                 </div>
@@ -87,6 +98,7 @@ function ChatSession() {
                     value={message.message}
                     handleClick={handleSubmit}
                     handleOnchange={handleChange}
+                    loading={loadingPromptResponse}
                 />
             </div>
         )

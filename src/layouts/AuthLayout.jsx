@@ -2,8 +2,8 @@ import { Outlet } from "react-router-dom"
 
 function AuthLayout() {
     return (
-        <div className="w-full h-screen flex items-center justify-center">
-            <div className="w-full max-w-md text-center md:border border-gray-400 rounded-md p-5">
+        <div className="w-full antialiased h-screen flex items-center justify-center bg-slate-950">
+            <div className="w-full max-w-md bg-slate-950 text-center md:border border-gray-700 rounded-md p-5">
                 <Outlet />
             </div>
         </div>

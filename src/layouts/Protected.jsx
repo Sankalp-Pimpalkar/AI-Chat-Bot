@@ -1,22 +1,35 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
 
 function Protected({ children }) {
 
-    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
+        const cookieFallback = !localStorage.getItem('cookieFallback') || localStorage.getItem('cookieFallback') === "[]"
+        const isLoginPage = location.pathname === '/login'
 
-        if (!localStorage.getItem('cookieFallback')) {
-            navigate('/login')
+        if (cookieFallback) {
+            if (isLoginPage) {
+                return
+            } else {
+                navigate('/login')
+            }
+            console.log('hello')
         }
-        return setLoading(false)
+        else if (!cookieFallback) {
+            if (isLoginPage) {
+                navigate('/')
+            } else {
+                return
+            }
+        }
+
     }, [navigate])
 
-    return loading ? <h1>Loading</h1> : children
-
+    return children
 }
 
 export default Protected

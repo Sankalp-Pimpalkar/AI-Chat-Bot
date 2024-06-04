@@ -31,7 +31,7 @@ function Signup() {
 
     return (
         <div className="w-full">
-            <h1 className="h1-style px-5">Create your Account</h1>
+            <h1 className="h1-style px-5 text-gray-300">Create your Account</h1>
 
             <div className="mt-10 w-full max-w-xs mx-auto border-gray-700 py-2">
                 <form onSubmit={handleSubmit(handlesignup)} className="flex items-center flex-col gap-3">

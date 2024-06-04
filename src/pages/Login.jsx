@@ -18,7 +18,7 @@ function Login() {
         authService.login(data)
             .then((userData) => {
                 dispatch(login(userData))
-                navigate('/')
+                navigate('/', {replace: true})
             })
             .catch((error) => {
                 console.log(error)
@@ -30,9 +30,9 @@ function Login() {
 
     return (
         <div className="w-full">
-            <h1 className="h1-style px-5">Login to Get Started</h1>
+            <h1 className="h1-style px-5 text-gray-300">Login to Get Started</h1>
 
-            <div className="mt-10 w-full max-w-xs mx-auto border-gray-700 py-2">
+            <div className="mt-10 w-full max-w-xs mx-auto py-2">
                 <form onSubmit={handleSubmit(handlesignin)} className="flex items-center flex-col gap-3">
                     <InputField
                         placeholder="Email"

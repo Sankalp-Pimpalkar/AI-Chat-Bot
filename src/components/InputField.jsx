@@ -16,7 +16,7 @@ const InputField = (
                 id={id}
                 ref={ref}
                 type={type}
-                className={`border text-xl border-gray-400 rounded-sm px-3 py-2 w-full font-normal outline-none text-gray-600 ${className}`}
+                className={`border text-lg bg-slate-900 border-gray-800 rounded-sm px-3 py-2 w-full font-normal outline-none text-gray-400 ${className}`}
                 {...props}
             />
         </div>

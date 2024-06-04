@@ -28,9 +28,9 @@ function Navbar() {
                     <Write className="text-2xl md:text-3xl cursor-pointer" />
                 </div>
 
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-400 hover:text-gray-300 transition-all duration-500 cursor-pointer">
+                <a href="/" className="text-2xl md:text-3xl font-bold text-gray-400 hover:text-gray-300 transition-all duration-500 cursor-pointer">
                     Gemini AI
-                </h1>
+                </a>
 
                 <div>
                     <Logout />

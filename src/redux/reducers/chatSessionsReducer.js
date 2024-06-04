@@ -48,9 +48,14 @@ const chatSessionSlice = createSlice({
                     })
                 })
             }
+        },
+        deleteAllMessagesInState: (state) => {
+            if (state) {
+                state = {}
+            }
         }
     }
 })
 
-export const { addNewMessageToState, getAllMessagesInState } = chatSessionSlice.actions
+export const { addNewMessageToState, getAllMessagesInState, deleteAllMessagesInState } = chatSessionSlice.actions
 export default chatSessionSlice.reducer

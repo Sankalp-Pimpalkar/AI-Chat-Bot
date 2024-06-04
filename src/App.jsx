@@ -9,6 +9,7 @@ import {
   WelcomePage
 } from "./pages"
 import ChatSession from "./components/ChatSession"
+import StartConversation from "./components/StartConversation"
 
 function App() {
 
@@ -16,7 +17,12 @@ function App() {
     <Routes>
       <Route index path="/welcome" element={<WelcomePage />} />
 
-      <Route element={<AuthLayout />}>
+      <Route
+        element={
+          <Protected>
+            <AuthLayout />
+          </Protected>}
+      >
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Route>
@@ -29,6 +35,7 @@ function App() {
           </Protected>
         }
       >
+        <Route path="/" element={<StartConversation />} />
         <Route path="/chats/:sessionId" element={<ChatSession />} />
       </Route>
 

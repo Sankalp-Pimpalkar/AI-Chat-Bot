@@ -1,8 +1,8 @@
 {
-    "redirects": [
+    "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "https://ai-chat-bot-zeta.vercel.app/"
+            "destination": "/"
         }
     ]
 }

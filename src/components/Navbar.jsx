@@ -5,6 +5,8 @@ import Show from "./icons/Show"
 import Write from "./icons/Write"
 import Logout from "./Logout"
 import SideBar from "./SideBar"
+import { Link } from "react-router-dom"
+import { ID } from "appwrite"
 
 function Navbar() {
 
@@ -23,7 +25,9 @@ function Navbar() {
                         }
                         <SideBar isVisible={toggleSidebar} />
                     </div>
-                    <Write className="text-2xl md:text-3xl cursor-pointer" />
+                    <Link to={`/chats/${ID.unique()}`}>
+                        <Write className="text-2xl md:text-3xl cursor-pointer" />
+                    </Link>
                 </div>
 
                 <a href="/" className="text-2xl md:text-3xl font-bold text-gray-400 hover:text-gray-300 transition-all duration-500 cursor-pointer">

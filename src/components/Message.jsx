@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Google from "./icons/Google"
 import User from "./icons/User"
 import Copy from "./icons/Copy"
@@ -7,22 +7,31 @@ import Copy from "./icons/Copy"
 function Message({ sender, message }) {
 
     const messageRef = useRef()
+    const markedText = message
+        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>') // Convert ### headers to <h3>
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>') // Convert ## headers to <h2>
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>') // Convert # headers to <h1>
+        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>') // Convert **bold** to <strong>
+        .replace(/\*(.*?)\*/gim, '<em>$1</em>'); // Convert *italic* to <em>
+
     const [isCopied, setIsCopied] = useState(false)
 
-    function handleCopy() {
-
+    const handleCopy = useCallback(() => {
         const text = messageRef.current
         navigator.clipboard.writeText(text.textContent)
         setIsCopied(true)
-    }
+    }, [])
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            setIsCopied(false)
-        }, 5000)
+        if (isCopied) {
+            const timeout = setTimeout(() => {
+                setIsCopied(false)
+            }, 5000)
 
-        return () => clearTimeout(timeout)
-    }, [handleCopy])
+            return () => clearTimeout(timeout)
+        }
+    }, [isCopied])
 
 
     return (
@@ -47,7 +56,7 @@ function Message({ sender, message }) {
                     }
                 </h1>
 
-                <p ref={messageRef} className="text-gray-400 bg-gray-900 py-2 px-4 rounded-lg" dangerouslySetInnerHTML={{ __html: message }}>
+                <p ref={messageRef} className="text-gray-400 bg-gray-900 py-2 px-4 rounded-lg" dangerouslySetInnerHTML={{ __html: markedText }}>
                 </p>
 
                 <span className="py-1">

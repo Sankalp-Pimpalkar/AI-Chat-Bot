@@ -1,16 +1,22 @@
 /* eslint-disable react/prop-types */
+// import { Link } from "react-router-dom"
 import { useState } from "react"
 import Hide from "./icons/Hide"
 import Show from "./icons/Show"
 import Write from "./icons/Write"
 import Logout from "./Logout"
 import SideBar from "./SideBar"
-import { Link } from "react-router-dom"
 import { ID } from "appwrite"
+import { useNavigate } from "react-router-dom"
 
 function Navbar() {
 
     const [toggleSidebar, setToggleSidebar] = useState(false)
+    const navigate = useNavigate()
+
+    function handleClick() {
+        navigate(`/chats/${ID.unique()}`)
+    }
 
     return (
         <div className="border-b z-auto bg-slate-950 border-gray-800 p-3 sticky top-0">
@@ -25,9 +31,9 @@ function Navbar() {
                         }
                         <SideBar isVisible={toggleSidebar} />
                     </div>
-                    <Link to={`/chats/${ID.unique()}`}>
+                    <div onClick={handleClick}>
                         <Write className="text-2xl md:text-3xl cursor-pointer" />
-                    </Link>
+                    </div>
                 </div>
 
                 <a href="/" className="text-2xl md:text-3xl font-bold text-gray-400 hover:text-gray-300 transition-all duration-500 cursor-pointer">

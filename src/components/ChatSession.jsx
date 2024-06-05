@@ -41,6 +41,12 @@ function ChatSession() {
 
             })();
         }
+
+        // Cleanup function to reset state when sessionId changes
+        return () => {
+            setChats([]);
+            setLoadingChats(true);
+        };
     }, [userId, sessionId])
 
     async function handleSubmit(e) {

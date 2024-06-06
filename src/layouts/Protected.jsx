@@ -9,7 +9,7 @@ function Protected({ children }) {
 
     useEffect(() => {
         const cookieFallback = !localStorage.getItem('cookieFallback') || localStorage.getItem('cookieFallback') === "[]"
-        const isLoginPage = location.pathname === '/login'
+        const isLoginPage = location.pathname === '/login' || location.pathname === '/signup'
 
         if (cookieFallback) {
             if (isLoginPage) {

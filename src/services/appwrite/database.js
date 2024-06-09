@@ -67,9 +67,12 @@ class DatabaseService {
                 configs.databaseId,
                 configs.collectionId,
                 [
-                    Query.equal('userId', userId)
+                    Query.equal('userId', userId),
+                    Query.limit(1000)
                 ]
             )
+
+            console.log(messages)
 
             if (messages) {
                 return messages.documents

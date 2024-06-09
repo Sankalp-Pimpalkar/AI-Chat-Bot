@@ -11,16 +11,16 @@ function ChatSession() {
 
     // Todo : Scroll to bottom is not working properly
 
+    const { sessionId } = useParams()
     const [chats, setChats] = useState([])
     const [loadingChats, setLoadingChats] = useState(true)
     const [loadingPromptResponse, setloadingPromptResponse] = useState(false)
     const [message, setMessage] = useState({
         userId: '',
-        sessionId: '',
+        sessionId,
         sender: 'user',
         message: ''
     })
-    const { sessionId } = useParams()
     const userId = useSelector(state => state.authReducer?.userData?.$id)
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function ChatSession() {
 
                     if (messages) {
                         setChats(messages)
-                        setMessage({ ...message, userId, sessionId })
+                        setMessage({ ...message, userId })
                     }
                     setLoadingChats(false)
                 }
@@ -55,6 +55,7 @@ function ChatSession() {
 
             setloadingPromptResponse(true)
             setChats(chats => [...chats, message])
+            console.log("Chats ", chats)
             const inputMessage = message.message
             // Clearing text input from input field
             setMessage({ ...message, message: '' })

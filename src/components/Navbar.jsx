@@ -29,7 +29,7 @@ function Navbar() {
                                 (<Show className="text-2xl md:text-3xl cursor-pointer" />) :
                                 (<Hide className="text-2xl md:text-3xl cursor-pointer" />)
                         }
-                        <SideBar isVisible={toggleSidebar} />
+                        <SideBar setToggle={setToggleSidebar} isVisible={toggleSidebar} />
                     </div>
                     <div onClick={handleClick}>
                         <Write className="text-2xl md:text-3xl cursor-pointer" />

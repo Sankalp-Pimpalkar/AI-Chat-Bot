@@ -2,26 +2,13 @@ import { useEffect } from "react"
 import Navbar from "../components/Navbar"
 import { Outlet } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { getAllMessagesInState } from "../redux/reducers/chatSessionsReducer"
-import { currentUser } from "../redux/reducers/authReducer"
-import authService from "../services/appwrite/auth"
-import databaseService from "../services/appwrite/database"
+import GetCurrentUserInRedux from "../helpers/getCurrentUserInRedux"
 
 function Home() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-
-        (async () => {
-            const user = await authService.getCurrentUser()
-            const messages = await databaseService.getAllMessagesByUserId({
-                userId: user.$id
-            })
-
-            dispatch(currentUser(user))
-            messages.length && dispatch(getAllMessagesInState(messages))
-        })()
-
+        GetCurrentUserInRedux({ dispatch })
     }, [])
 
     return (

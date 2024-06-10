@@ -93,13 +93,15 @@ function ChatSession() {
         )
     } else {
         return (
-            <div className="w-full md:max-w-6xl h-full pb-20 px-2 flex flex-col gap-8 mx-auto">
-                <div className="w-full h-fit flex flex-col gap-3">
-                    {
-                        chats.map((chat, index) => (
-                            <Message key={index} chats={chats} sender={chat.sender} message={chat.message} />
-                        ))
-                    }
+            <>
+                <div className="w-full md:max-w-6xl h-full pb-20 px-2 flex flex-col gap-8 mx-auto">
+                    <div className="w-full h-fit flex flex-col gap-3">
+                        {
+                            chats.map((chat, index) => (
+                                <Message key={index} chats={chats} sender={chat.sender} message={chat.message} />
+                            ))
+                        }
+                    </div>
                 </div>
                 <BottomBar
                     value={message.message}
@@ -107,7 +109,7 @@ function ChatSession() {
                     handleOnchange={handleChange}
                     loading={loadingPromptResponse}
                 />
-            </div>
+            </>
         )
     }
 }

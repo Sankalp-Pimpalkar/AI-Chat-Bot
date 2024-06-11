@@ -29,7 +29,11 @@ function BottomBar({ handleClick, value, handleOnchange, loading }) {
                     onChange={(e) => handleOnchange(e.target.value)}
                     placeholder="Send Message"
                 />
-                <button onClick={(e) => handleClick(e)} className="bg-gray-400 hover:bg-gray-200 rounded-full">
+                <button onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleClick()
+                }} className="bg-gray-400 hover:bg-gray-200 rounded-full">
                     {
                         loading ?
                             (<Loader className="text-xl py-2 px-3 rounded-full" />)

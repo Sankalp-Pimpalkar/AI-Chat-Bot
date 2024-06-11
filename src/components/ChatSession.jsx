@@ -49,8 +49,7 @@ function ChatSession() {
         };
     }, [userId, sessionId])
 
-    async function handleSubmit(e) {
-        e.stopPropagation()
+    async function handleSubmit() {
         if (message.message.trim()) {
 
             setloadingPromptResponse(true)

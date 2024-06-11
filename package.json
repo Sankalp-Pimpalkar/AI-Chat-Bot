@@ -12,6 +12,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.11.3",
     "@reduxjs/toolkit": "^2.2.5",
+    "@tanstack/react-query": "^5.40.1",
     "appwrite": "^14.0.1",
     "marked": "^12.0.2",
     "react": "^18.2.0",
@@ -21,6 +22,7 @@
     "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.43.1",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",

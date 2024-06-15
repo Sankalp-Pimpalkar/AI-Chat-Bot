@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import databaseService from "../services/appwrite/database";
@@ -14,26 +13,6 @@ function ChatSession() {
     const [chats, setChats] = useState([]);
     const [loadingChats, setLoadingChats] = useState(false);
     const [loadingPromptResponse, setLoadingPromptResponse] = useState(false);
-=======
-import { useEffect, useRef, useState } from "react"
-import { useParams } from "react-router-dom"
-import databaseService from "../services/appwrite/database"
-import { useSelector } from "react-redux"
-import Message from "./Message"
-import Loader from "./icons/Loader"
-import BottomBar from "./BottomBar"
-import GenerateTextGemini from "../services/gemini/function"
-
-function ChatSession() {
-
-    // Todo : Scroll to bottom is not working properly
-
-    const { sessionId } = useParams()
-    const messageRef = useRef()
-    const [chats, setChats] = useState([])
-    const [loadingChats, setLoadingChats] = useState(true)
-    const [loadingPromptResponse, setloadingPromptResponse] = useState(false)
->>>>>>> 5db242ca9502752a27f2ba8a28ed82341a22dccb
     const [message, setMessage] = useState({
         userId: '',
         sessionId,
@@ -49,7 +28,6 @@ function ChatSession() {
                 const messages = await databaseService.getMessagesBySessionId({
                     userId,
                     sessionId
-<<<<<<< HEAD
                 });
 
                 if (messages) {
@@ -57,16 +35,6 @@ function ChatSession() {
                     setMessage(prevMessage => ({ ...prevMessage, userId }));
                 }
                 setLoadingChats(false);
-=======
-                })
-
-                if (messages) {
-                    setChats(messages)
-                    setMessage({ ...message, userId })
-                }
-                setLoadingChats(false)
-
->>>>>>> 5db242ca9502752a27f2ba8a28ed82341a22dccb
             })();
         }
 
@@ -88,16 +56,8 @@ function ChatSession() {
             const newMessage = { ...message, userId };
             setChats(prevChats => [...prevChats, newMessage]);
 
-<<<<<<< HEAD
             // Clear the input field
             setMessage(prevMessage => ({ ...prevMessage, message: '' }));
-=======
-            setloadingPromptResponse(true)
-            setChats(chats => [...chats, message])
-            const inputMessage = message.message
-            // Clearing text input from input field
-            setMessage({ ...message, message: '' })
->>>>>>> 5db242ca9502752a27f2ba8a28ed82341a22dccb
 
             await databaseService.addNewMessage(newMessage);
 
@@ -152,8 +112,4 @@ function ChatSession() {
     );
 }
 
-<<<<<<< HEAD
 export default ChatSession;
-=======
-export default ChatSession
->>>>>>> 5db242ca9502752a27f2ba8a28ed82341a22dccb

@@ -49,18 +49,14 @@ function ChatSession() {
             container.scrollTop = container.scrollHeight;
         }
     }, [chats]);
-
     async function handleSubmit() {
         if (message.message.trim()) {
             setLoadingPromptResponse(true);
             const newMessage = { ...message, userId };
             setChats(prevChats => [...prevChats, newMessage]);
 
-            setLoadingPromptResponse(true)
-            setChats(chats => [...chats, message])
-            const inputMessage = message.message
-            // Clearing text input from input field
-            setMessage({ ...message, message: '' })
+            // Clear the input field
+            setMessage(prevMessage => ({ ...prevMessage, message: '' }));
 
             await databaseService.addNewMessage(newMessage);
 
@@ -82,7 +78,6 @@ function ChatSession() {
             await databaseService.addNewMessage(messageResponseFromGemini);
         }
     }
-
     function handleChange(inputValue) {
         setMessage(prevMessage => ({ ...prevMessage, message: inputValue }));
     }

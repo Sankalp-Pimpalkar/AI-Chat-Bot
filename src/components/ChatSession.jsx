@@ -48,15 +48,8 @@ function ChatSession() {
         };
     }, [userId, sessionId])
 
-    useEffect(() => {
-        const container = messageRef?.current
-
-        if (container) {
-            container.scrollTop = container.scrollHeight
-        }
-    }, [chats])
-
-    async function handleSubmit() {
+    async function handleSubmit(e) {
+        e.stopPropagation()
         if (message.message.trim()) {
 
             setloadingPromptResponse(true)
@@ -98,8 +91,8 @@ function ChatSession() {
         )
     } else {
         return (
-            <div className="w-full md:max-w-6xl h-full px-2 flex flex-col gap-8 mx-auto">
-                <div ref={messageRef} className="w-full pb-20 h-[calc(100vh-110px)] flex flex-col gap-3 overflow-y-auto hide-scrollbar">
+            <div className="w-full md:max-w-6xl h-full pb-20 px-2 flex flex-col gap-8 mx-auto">
+                <div className="w-full h-fit flex flex-col gap-3">
                     {
                         chats.map((chat, index) => (
                             <Message key={index} chats={chats} sender={chat.sender} message={chat.message} />
@@ -112,7 +105,7 @@ function ChatSession() {
                     handleOnchange={handleChange}
                     loading={loadingPromptResponse}
                 />
-            </div>
+            </>
         )
     }
 }

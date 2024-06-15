@@ -83,6 +83,31 @@ class DatabaseService {
         }
     }
 
+    async deleteMessagesBySessionId(sessionId) {
+        try {
+
+            const documents = await this.database.listDocuments(
+                configs.databaseId,
+                configs.collectionId,
+                [
+                    Query.equal('sessionId', sessionId)
+                ]
+            ) || []
+
+
+            for (const document of documents.documents) {
+                await this.database.deleteDocument(
+                    configs.databaseId,
+                    configs.collectionId,
+                    document.$id
+                )
+            }
+
+
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 const databaseService = new DatabaseService()

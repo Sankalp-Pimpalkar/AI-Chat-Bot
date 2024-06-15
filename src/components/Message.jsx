@@ -6,6 +6,7 @@ import Copy from "./icons/Copy"
 
 function Message({ sender, message }) {
 
+    const textRef = useRef()
     const messageRef = useRef()
     const markedText = message
         .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
@@ -18,7 +19,7 @@ function Message({ sender, message }) {
     const [isCopied, setIsCopied] = useState(false)
 
     const handleCopy = useCallback(() => {
-        const text = messageRef.current
+        const text = textRef.current
         navigator.clipboard.writeText(text.textContent)
         setIsCopied(true)
     }, [])
@@ -33,9 +34,15 @@ function Message({ sender, message }) {
         }
     }, [isCopied])
 
+    // useEffect(() => {
+    //     console.log(messageRef.current.scrollHeight)
+    //     console.log(chats)
+    //     messageRef.current.scrollTop = messageRef.current.scrollHeight
+    // }, [])
+
 
     return (
-        <div className="flex items-start gap-3 antialiased w-full max-w-3xl">
+        <div ref={messageRef} className="flex items-start gap-3 antialiased w-full max-w-3xl">
             <div className="bg-gray-300 px-1 flex items-center justify-center rounded-full">
                 {
                     sender === 'model' ?
@@ -56,7 +63,7 @@ function Message({ sender, message }) {
                     }
                 </h1>
 
-                <p ref={messageRef} className="text-gray-400 bg-gray-900 py-2 px-4 rounded-lg" dangerouslySetInnerHTML={{ __html: markedText }}>
+                <p ref={textRef} className="text-gray-400 bg-gray-900 py-2 px-4 rounded-lg" dangerouslySetInnerHTML={{ __html: markedText }}>
                 </p>
 
                 <span className="py-1">

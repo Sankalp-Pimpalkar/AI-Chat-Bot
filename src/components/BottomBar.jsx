@@ -26,7 +26,10 @@ function BottomBar({ handleClick, value, handleOnchange, loading }) {
                     ref={inputRef}
                     value={value}
                     onKeyDown={handlePressEnter}
-                    onChange={(e) => handleOnchange(e.target.value)}
+                    onChange={(e) => {
+                        e.stopPropagation()
+                        handleOnchange(e.target.value)
+                    }}
                     placeholder="Send Message"
                 />
                 <button onClick={(e) => handleClick(e)} className="bg-gray-400 hover:bg-gray-200 rounded-full">

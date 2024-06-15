@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import databaseService from "../services/appwrite/database"
 import { useSelector } from "react-redux"
@@ -12,6 +12,7 @@ function ChatSession() {
     // Todo : Scroll to bottom is not working properly
 
     const { sessionId } = useParams()
+    const messageRef = useRef()
     const [chats, setChats] = useState([])
     const [loadingChats, setLoadingChats] = useState(true)
     const [loadingPromptResponse, setloadingPromptResponse] = useState(false)
@@ -26,18 +27,16 @@ function ChatSession() {
     useEffect(() => {
         if (userId) {
             (async () => {
-                if (!chats.length) {
-                    const messages = await databaseService.getMessagesBySessionId({
-                        userId,
-                        sessionId
-                    })
+                const messages = await databaseService.getMessagesBySessionId({
+                    userId,
+                    sessionId
+                })
 
-                    if (messages) {
-                        setChats(messages)
-                        setMessage({ ...message, userId })
-                    }
-                    setLoadingChats(false)
+                if (messages) {
+                    setChats(messages)
+                    setMessage({ ...message, userId })
                 }
+                setLoadingChats(false)
 
             })();
         }
@@ -49,13 +48,19 @@ function ChatSession() {
         };
     }, [userId, sessionId])
 
-    async function handleSubmit(e) {
-        e.stopPropagation()
+    useEffect(() => {
+        const container = messageRef?.current
+
+        if (container) {
+            container.scrollTop = container.scrollHeight
+        }
+    }, [chats])
+
+    async function handleSubmit() {
         if (message.message.trim()) {
 
             setloadingPromptResponse(true)
             setChats(chats => [...chats, message])
-            console.log("Chats ", chats)
             const inputMessage = message.message
             // Clearing text input from input field
             setMessage({ ...message, message: '' })
@@ -93,8 +98,8 @@ function ChatSession() {
         )
     } else {
         return (
-            <div className="w-full md:max-w-6xl h-full pb-20 px-2 flex flex-col gap-8 mx-auto">
-                <div className="w-full h-fit flex flex-col gap-3">
+            <div className="w-full md:max-w-6xl h-full px-2 flex flex-col gap-8 mx-auto">
+                <div ref={messageRef} className="w-full pb-20 h-[calc(100vh-110px)] flex flex-col gap-3 overflow-y-auto hide-scrollbar">
                     {
                         chats.map((chat, index) => (
                             <Message key={index} chats={chats} sender={chat.sender} message={chat.message} />

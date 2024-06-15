@@ -12,7 +12,6 @@ export default function GetAllMessagesInRedux({ dispatch }) {
                         userId: user.$id
                     })
                     .then(messages => {
-                        console.log("Hello")
                         return dispatch(getAllMessagesInState(messages))
                     })
                     .catch(err => {

@@ -105,7 +105,7 @@ function ChatSession() {
                     handleOnchange={handleChange}
                     loading={loadingPromptResponse}
                 />
-            </>
+            </div>
         )
     }
 }

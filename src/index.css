@@ -33,6 +33,12 @@
 
 /* Hide scrollbar for other browsers */
 .hide-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+pre {
+    @apply w-full hide-scrollbar max-w-md md:max-w-xl overflow-auto p-4 my-2 bg-black rounded-md
 }

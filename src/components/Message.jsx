@@ -13,8 +13,13 @@ function Message({ sender, message }) {
         .replace(/^### (.*$)/gim, '<h3>$1</h3>') // Convert ### headers to <h3>
         .replace(/^## (.*$)/gim, '<h2>$1</h2>') // Convert ## headers to <h2>
         .replace(/^# (.*$)/gim, '<h1>$1</h1>') // Convert # headers to <h1>
-        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>') // Convert **bold** to <strong>
-        .replace(/\*(.*?)\*/gim, '<em>$1</em>'); // Convert *italic* to <em>
+        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/gim, '<em>$1</em>') // Convert *italic* to <em>
+        .replace(/```([\s\S]*?)```/g, (match, code) => { // Convert code blocks
+            // Escape HTML special characters in the code block
+            const escapedCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return `<code>${escapedCode}</code>`;
+        });
 
     const [isCopied, setIsCopied] = useState(false)
 
@@ -63,7 +68,8 @@ function Message({ sender, message }) {
                     }
                 </h1>
 
-                <p ref={textRef} className="text-gray-400 bg-gray-900 py-2 px-4 rounded-lg" dangerouslySetInnerHTML={{ __html: markedText }}>
+                <p ref={textRef} 
+                className="text-gray-400 w-full max-w-[345px] md:max-w-xl bg-gray-900 py-2 px-4 rounded-lg" dangerouslySetInnerHTML={{ __html: markedText }}>
                 </p>
 
                 <span className="py-1">
